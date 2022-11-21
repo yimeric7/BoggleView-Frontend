@@ -5,26 +5,44 @@
     text-align: center;
 }
 
-#host-parent{
-    width: 100%;
-}
-
-#host-enter-port-section{
+#host-enter-port-section {
     left: 33.33%;
-    width: 66.67%;
+   
 }
 
-#host-select-port-text{
-    left: 0px;
-    width: 75%
+#host-select-port-text {
+    border-radius: 8px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    transition: border-color 0.25s;
 }
 
-#host-setup-form{
-    width:100%;
+#host-select-port-submit {
+    border-radius: 8px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #131313;
+    cursor: pointer;
+    transition: border-color 0.25s;
 }
 
-#host-select-port-submit{
-    margin-left: 0px;
-    left: 75%;
-    width: 25%
+#host-select-port-submit:hover,
+#host-select-port-text:hover {
+    border-color: #646cff;
+}
+
+#host-select-port-submit:focus,
+#host-select-port-submit:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
 }

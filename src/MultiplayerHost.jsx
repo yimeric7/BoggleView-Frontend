@@ -1,19 +1,34 @@
+import { Alert, AlertTitle } from '@mui/material'
 import './MultiplayerHost.css'
+import { useState } from 'react'
 
 function MultiplayerHost() {
+    const [input, setInput] = useState()
+
+    const handleChange = event => {
+        setInput(event.target.value);
+        console.log('value is:', event.target.value);
+    }
+
+    const handleClick = () => {
+        // if input is not within range, then throw error
+        // just check if textInput is valid
+        console.log("click")
+        console.log(input)
+    }
     return (
         <div id="host-parent">
             <div>
                 <h1>Host Game Setup</h1>
                 <h2>Enter a port to host on:</h2>
-                <h4>(todo: fix form alignment, move into one line)</h4>
+                <p>(todo:  add function to verify valid input range to be 0-65353)</p>
             </div>
-            <div id="host-enter-port-section">
-                <form id="host-setup-form">
-                    <input type="text" id="host-select-port-text"/>
-                    <input type="submit" id="host-select-port-submit"/>
-                </form>
-            </div>
+            <span id="host-enter-port-section">
+
+                <input type="text" id="host-select-port-text" onChange={handleChange} value={input}/>
+                <button id="host-select-port-submit" onClick={handleClick}>Submit</button>
+
+            </span>
         </div>
     )
 }
