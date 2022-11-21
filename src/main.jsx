@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
+import Select from './Select'
 import './index.css'
+import MultiplayerSelectMode from './MultiplayerSelectMode'
+import MultiplayerHost from './MultiplayerHost'
 
-// Make Boggle svg in index.html & change title
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    {/* Replace with <Select/> */}
+    <MultiplayerHost/>
   </React.StrictMode>
 )
