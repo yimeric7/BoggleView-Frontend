@@ -1,0 +1,22 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.select-host-join-buttons {
+
+    position: absolute;
+    align-self: center;
+
+    top: 66.67%;
+}
+
+#select-join {
+    left: 33.33%;
+}
+
+#select-host {
+    right: 33.33%;
+}
