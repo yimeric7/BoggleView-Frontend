@@ -6,7 +6,7 @@ import {
 } from '../backend/utils.js';
 
 //fetch mini dictionary (for now; use axios & database later)
-var dictionary = [];
+let dictionary = [];
 fetch(
     'https://raw.githubusercontent.com/dwyl/english-words/master/words_dictionary.json'
 )
