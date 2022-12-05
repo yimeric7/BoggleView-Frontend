@@ -1,8 +1,8 @@
 import { Alert, AlertTitle } from '@mui/material'
-import './MultiplayerHost.css'
-import { useState } from 'react'
+import '../styles/MultiplayerHost.css'
+import React, { useState } from 'react'
 
-function MultiplayerHost() {
+export default function MultiplayerHost() {
     const [input, setInput] = useState()
 
     const handleChange = event => {
@@ -32,5 +32,3 @@ function MultiplayerHost() {
         </div>
     )
 }
-
-export default MultiplayerHost

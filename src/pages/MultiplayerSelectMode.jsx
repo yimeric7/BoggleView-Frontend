@@ -1,4 +1,4 @@
-import './MultiplayerSelectMode.css'
+import '../styles/MultiplayerSelectMode.css'
 
 function MultiplayerSelectMode() {
     return (

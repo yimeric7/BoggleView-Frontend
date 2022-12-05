@@ -1,6 +1,6 @@
-import './Select.css'
+import '../styles/MainSelectMode.css'
 
-function Select() {
+function MainSelectMode() {
     return (
         <div id="select-parent">
             <div>
@@ -14,4 +14,4 @@ function Select() {
     )
 }
 
-export default Select
+export default MainSelectMode
