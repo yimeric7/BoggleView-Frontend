@@ -1,0 +1,53 @@
+#boggle-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#board {
+    border-radius: 35px;
+    border: 8px solid #dcdcdc;
+    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.69);
+    margin: 5px;
+    padding: 8px;
+    width: 420px;
+    height: 420px;
+}
+
+.row {
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    padding: 5px;
+}
+
+.letter:hover {
+    cursor: pointer;
+}
+
+.letter {
+    width: 80px;
+    height: 80px;
+    border-radius: 30px;
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.69);
+    flex: 1 1 auto;
+    margin: 5px;
+    color: black;
+}
+
+.letter.selected {
+    background-color: #acceec;
+}
+
+.letter span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}

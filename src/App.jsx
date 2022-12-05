@@ -1,19 +1,11 @@
-import { useState } from 'react'
-import './App.css'
+import React from 'react';
+import Game from './pages/Game';
+import './styles/board.css';
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      Hello World
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-    </div>
-  )
+export default function App() {
+    return (
+        <div id="boggle-container">
+            <Game />
+        </div>
+    );
 }
-
-export default App
