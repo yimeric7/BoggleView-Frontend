@@ -15,6 +15,12 @@
     height: 420px;
 }
 
+#word-submit {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
 .row {
     display: flex;
     text-align: center;

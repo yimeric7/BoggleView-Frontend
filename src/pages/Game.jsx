@@ -4,6 +4,7 @@ import {
     generateRandomBoard,
     generatePossibleWords,
 } from '../backend/utils.js';
+import '../styles/board.css';
 
 //fetch mini dictionary (for now; use axios & database later)
 let dictionary = [];
@@ -47,25 +48,35 @@ export default function Game() {
     };
 
     return (
-        <div style={{ margin: 'auto', textAlign: 'center' }}>
-            <h1>Game Page</h1>
-            <h2>Possible Words: {possibleWords.length}</h2>
-            <Board boardSize={boardSize} board={randomBoard} />
-            <br></br>
-            <button onClick={handleNewBoard}>New Board</button>
-            <br></br>
-            <button onClick={handleStart}>Start game</button>
-            <br></br>
-            <button onClick={handleShow}>Show words</button>
-            {showWords ? (
-                <div>
-                    {possibleWords.map((word) => {
-                        return <div>{word}</div>;
-                    })}
+        <>
+            <div style={{ margin: 'auto', textAlign: 'center' }}>
+                <h1>Boggle</h1>
+                <h2>Possible Words: {possibleWords.length}</h2>
+                <Board boardSize={boardSize} board={randomBoard} />
+
+                <div id="word-submit">
+                    <span><strong>Current Word:</strong> ABC</span>
+                    <button type="button">Submit Word</button>
                 </div>
-            ) : (
-                <></>
-            )}
-        </div>
+
+                {/*<button onClick={handleNewBoard}>New Board</button>*/}
+                {/*<br></br>*/}
+                {/*<button onClick={handleStart}>Start game</button>*/}
+                {/*<br></br>*/}
+
+            </div>
+            {/*<div style={{ margin: 'right', textAlign: 'right' }}>*/}
+            {/*    <button onClick={handleShow}>Show words</button>*/}
+            {/*    {showWords ? (*/}
+            {/*        <div>*/}
+            {/*            {possibleWords.map((word) => {*/}
+            {/*                return <div>{word}</div>;*/}
+            {/*            })}*/}
+            {/*        </div>*/}
+            {/*    ) : (*/}
+            {/*        <></>*/}
+            {/*    )}*/}
+            {/*</div>*/}
+        </>
     );
 }

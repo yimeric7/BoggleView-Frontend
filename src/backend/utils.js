@@ -1,6 +1,9 @@
 export const generateRandomBoard = (boardSize) => {
-    // each cell has seperate letters that it can be
-    const letters = 'abcdefghijklmnopqrstuvwxyz';
+  const dice = [["RIFOBX", "IFEHEY", "DENOWS", "UTOKND"],
+    ["HMSRAO", "LUPETS", "ACITOA", "YLGKUE"],
+    ["QBMJOA", "EHISPN", "VETIGN", "BALIYT"],
+    ["EZAVND", "RALESC", "UWILRG", "PACEMD"]];
+
     let randomBoard = [];
     for (let i = 0; i < boardSize; i++) {
         randomBoard.push([]);
@@ -8,9 +11,10 @@ export const generateRandomBoard = (boardSize) => {
 
     for (let i = 0; i < boardSize; i++) {
         for (let j = 0; j < boardSize; j++) {
-            randomBoard[i][j] = letters.charAt(
-                Math.floor(Math.random() * letters.length)
-            );
+            randomBoard[i][j] = dice[i][j].charAt(
+                Math.floor(Math.random() * dice[i][j].length)
+            ).toLowerCase();
+
         }
     }
 

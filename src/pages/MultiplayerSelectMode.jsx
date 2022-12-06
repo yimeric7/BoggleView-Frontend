@@ -1,6 +1,6 @@
 import '../styles/MultiplayerSelectMode.css'
 
-function MultiplayerSelectMode() {
+export default function MultiplayerSelectMode() {
     return (
         <div id="mutiplayer-select-mode-parent">
             <div>
@@ -14,5 +14,3 @@ function MultiplayerSelectMode() {
         </div>
     )
 }
-
-export default MultiplayerSelectMode
