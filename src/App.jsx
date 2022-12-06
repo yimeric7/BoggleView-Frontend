@@ -1,11 +1,11 @@
 import React from 'react';
-import Game from './pages/Game.jsx';
-import Home from './pages/Home.jsx';
 import MultiplayerHost from './pages/MultiplayerHost.jsx';
 import MultiplayerJoin from './pages/MultiplayerJoin.jsx';
 import MultiplayerSelectMode from './pages/MultiplayerSelectMode.jsx';
 import './styles/board.css';
 import { Route, Routes } from "react-router";
+import SinglePlayer from "./pages/Singleplayer.jsx"
+import MainSelectMode from "./pages/MainSelectMode";
 
 export default function App() {
     return (
@@ -13,7 +13,7 @@ export default function App() {
         <Routes>
             <Route path="/" element={
                 <div id="home-container">
-                    <Home />
+                    <MainSelectMode />
                 </div>} />
             <Route path="/multiplayer-host" element={
                 <div id="multiplayer-host-container">
@@ -27,9 +27,9 @@ export default function App() {
                 <div id="multiplayer-select-mode-container">
                     <MultiplayerSelectMode/>
                 </div>} />
-            <Route path="/game" element={
+            <Route path="/single-player" element={
                 <div id="boggle-container">
-                    <Game />
+                    <SinglePlayer />
                 </div>
             } />
         </Routes>

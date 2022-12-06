@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/MainSelectMode.css';
 import { useNavigate } from 'react-router';
 
 export default function MainSelectMode() {
@@ -7,16 +6,16 @@ export default function MainSelectMode() {
 
     return (
         // display Boggle Logo
-        <div id="select-parent">
+        <>
             <div>
-                <h1>Select Gamemode</h1>
+                <h1>Select Game mode</h1>
             </div>
-            <div id="select-button-section">
-                <button className="select-gamemode-buttons" id="select-singleplayer"
-                        onClick={() => nav('/game')}>
-                    Singleplayer</button>
-                <button className="select-gamemode-buttons" id="select-multiplayer" onClick={() => console.log("multiplayer")}>Multiplayer</button>
-            </div>
-        </div>
+            <button className="select-gamemode-buttons" id="select-singleplayer"
+                    onClick={() => nav('/single-player')}>
+                Single Player</button>
+            <button className="select-gamemode-buttons" id="select-multiplayer"
+                    onClick={() => console.log("multiplayer")}>
+                Multiplayer</button>
+        </>
     )
 }

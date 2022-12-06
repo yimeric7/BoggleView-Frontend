@@ -16,9 +16,38 @@
 }
 
 #word-submit {
-    margin: 15px 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0;
+
+    /*margin: 15px 0;*/
+    /*width: 200px;*/
+    /*display: flex;*/
+
+    /*margin: 15px 0;*/
+    /*display: flex;*/
+    /*position: relative;*/
+    /*top: 50%;*/
+    /*width: auto;*/
+}
+
+#score-table {
+    align-self: flex-start;
+    border: 5px solid #dcdcdc;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+#score-table td, #score-table th {
+    border: 5px solid #dcdcdc;
+    background-color: white;
+    padding: 5px;
+    color: black;
+}
+
+#score-table tr#footer td {
+    background-color: #ACCEEC;
 }
 
 .row {
