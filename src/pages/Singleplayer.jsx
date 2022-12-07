@@ -3,9 +3,10 @@ import Board from '../components/Board';
 import {
     generateRandomBoard,
     generatePossibleWords,
+    convertWordsToMap,
 } from '../backend/utils.js';
 import '../styles/board.css';
-import Row from "../components/Row.jsx";
+import { useNavigate } from "react-router";
 
 let dictionary = [];
 fetch(
@@ -24,43 +25,70 @@ export default function SinglePlayer() {
     const [randomBoard, setRandomBoard] = useState([[]]);
     const [possibleWords, setPossibleWords] = useState([]);
     const [foundWords, setFoundWords] = useState([]);
-    const [showWords, setShowWords] = useState(false);
+    const [currentScore, setCurrentScore] = useState(0);
+    const [usedWords, setUsedWords] = useState(new Set());
+    const nav = useNavigate();
 
     useEffect(() => {
         let tempRandBoard = generateRandomBoard(boardSize);
-        setPossibleWords(generatePossibleWords(tempRandBoard, dictionary));
+        setPossibleWords(convertWordsToMap(generatePossibleWords(tempRandBoard, dictionary)));
         setRandomBoard(tempRandBoard);
     }, []);
 
-    // Generate new 4x4 matrix of letters & possible words
-    const handleNewBoard = () => {
-        let tempRandBoard = generateRandomBoard(boardSize);
-        setPossibleWords(generatePossibleWords(tempRandBoard, dictionary));
-        setRandomBoard(tempRandBoard);
-        console.log(possibleWords);
-    };
+    useEffect(() => {
+        let currScore = 0;
+        for (let i = 0; i < foundWords.length; i++) currScore += foundWords[i].score;
+        setCurrentScore(currScore);
+    }, [foundWords]);
 
     const handleChange = event => {
         setInput(event.target.value);
-        console.log('value is:', event.target.value);
+    }
+
+    const handleKeyDown = event => {
+        if (event.key === 'Enter') {
+            // Check if word is correct, if correct, then add word to scoretable
+            if (possibleWords.has(input) && !usedWords.has(input)) {
+                const newWordFound = {
+                    word: input,
+                    score: possibleWords.get(input)
+                }
+                setFoundWords([...foundWords, newWordFound])
+                setUsedWords(new Set([...usedWords, input]));
+                setInput('');
+            } else {
+                // throw error and say not word
+                console.log("not a word");
+            }
+
+        }
+    }
+
+    const handleClick = () => {
+
     }
 
     return (
         <>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
-                {/*// Boggle logo maybe?*/}
-                <h2>Possible Words: {possibleWords.length}</h2>
+                <button onClick={handleClick}>Start Game!</button>
+                <button onClick={() => nav('/')}>Return home</button>
+                <h1>Boggle</h1>
+                <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
                 <Board boardSize={boardSize} board={randomBoard} />
 
-                // Enter in here to start playing
-                // on change, update word,
-                // if valid word, then you get points (or pop up that says "that is a word!)
-                // if invalid, alert that says invalid word, please try again
-                // score box that shows points
-                // also show how many words you've gotten out of possible
-                // put word score on right (css)
+                {/*// Enter in here to start playing*/}
+                {/*// on change, update word,*/}
+                {/*// if valid word, then you get points (or pop up that says "some prhases (randomized))*/}
+                {/*// if invalid, alert that says invalid word, please try again*/}
+                {/*// score box that shows points*/}
+                {/*// also show how many words you've gotten out of possible*/}
+                {/*// put word score on right (css)*/}
                 <span id="word-submit">
-                    <input type="text" onChange={handleChange} value={input}/>
+                    <input type="text"
+                           onChange={handleChange}
+                           onKeyDown={handleKeyDown}
+                           value={input}/>
                 </span>
 
                 <table id="score-table">
@@ -68,37 +96,22 @@ export default function SinglePlayer() {
                         <th>Word </th>
                         <th>Score</th>
                     </tr>
-                    <div>
-                        {foundWords.map(words => {
-                            return (
-                                <tr>
-                                    <td>{words}</td>
-                                </tr>
-                            )
-                        })}
-                    </div>
-                    {/*<div id="board">*/}
-                    {/*    {board.map(board => { return <Row boardRow = {board}/> })}*/}
-                    {/*</div>*/}
-
+                    {foundWords.map(obj => {
+                        return (
+                            <tr>
+                                <td>{obj.word}</td>
+                                <td>{obj.score}</td>
+                            </tr>
+                        )
+                    })}
                     <tr>
-
-                        <td>congruent</td>
-                        <td>11</td>
-                    </tr>
-                    <tr>
-                        <td>urgent</td>
-                        <td>3</td>
                     </tr>
                     <tr id="footer">
                         <td>Total </td>
-                        <td>14</td>
+                        <td>{currentScore}</td>
                     </tr>
                 </table>
-
-
             </div>
-
         </>
     );
 }

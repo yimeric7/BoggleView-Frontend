@@ -20,16 +20,14 @@
     justify-content: center;
     align-items: center;
     margin: 15px 0;
+}
 
-    /*margin: 15px 0;*/
-    /*width: 200px;*/
-    /*display: flex;*/
-
-    /*margin: 15px 0;*/
-    /*display: flex;*/
-    /*position: relative;*/
-    /*top: 50%;*/
-    /*width: auto;*/
+input[type="text"] {
+    margin: 10px;
+    border-radius: 15px;
+    font-size: 30px;
+    line-height: 14px;
+    caret-color: rgba(0, 0, 0, 0.5);
 }
 
 #score-table {

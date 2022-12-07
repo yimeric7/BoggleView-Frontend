@@ -23,7 +23,7 @@ export const generateRandomBoard = (boardSize) => {
 
 // this function isn't working correctly (90% correct)
 export const generatePossibleWords = (board, words) => {
-    const dirs = [[-1, 0], [0, 1], [1, 0], [0, -1]];
+    const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
     let res = [];
 
     const buildTrie = () => {
@@ -65,7 +65,7 @@ export const generatePossibleWords = (board, words) => {
         }
     }
 
-    var finalResult = []
+    let finalResult = []
 
     for (let i = 0; i < res.length; i++) {
         if (res[i].length > 2) {
@@ -73,4 +73,23 @@ export const generatePossibleWords = (board, words) => {
         }
     }
     return finalResult;
+};
+
+// Turn possible words into possible score
+export const convertWordsToMap = (possibleWords) => {
+    let resultMap = new Map();
+    for (let i = 0; i < possibleWords.length; i++) {
+        if (possibleWords[i].length <= 4) {
+            resultMap.set(possibleWords[i], 1);
+        } else if (possibleWords[i].length == 5) {
+            resultMap.set(possibleWords[i], 2);
+        } else if (possibleWords[i].length == 6) {
+            resultMap.set(possibleWords[i], 3);
+        } else if (possibleWords[i].length == 7) {
+            resultMap.set(possibleWords[i], 5);
+        } else if (possibleWords[i].length >= 8) {
+            resultMap.set(possibleWords[i], 11);
+        }
+    }
+    return resultMap;
 };
