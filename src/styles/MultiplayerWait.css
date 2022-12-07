@@ -8,3 +8,7 @@
     width: 50%;
 }
 
+.player-status-line{
+    text-align: left;
+    width:100%;
+}
