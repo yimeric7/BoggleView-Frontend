@@ -6,6 +6,7 @@ import './styles/board.css';
 import { Route, Routes } from "react-router";
 import SinglePlayer from "./pages/Singleplayer.jsx"
 import MainSelectMode from "./pages/MainSelectMode";
+import MultiplayerWait from './pages/MultiplayerWait.jsx';
 
 export default function App() {
     return (
@@ -25,11 +26,16 @@ export default function App() {
                 </div>} />
             <Route path="/multiplayer-select-mode" element={
                 <div id="multiplayer-select-mode-container">
-                    <MultiplayerSelectMode/>
+                    <MultiplayerSelectMode />
                 </div>} />
             <Route path="/single-player" element={
                 <div id="boggle-container">
                     <SinglePlayer />
+                </div>
+            } />
+            <Route path="/multiplayer-wait" element={
+                <div id="multiplayer-wait-container">
+                    <MultiplayerWait />
                 </div>
             } />
         </Routes>

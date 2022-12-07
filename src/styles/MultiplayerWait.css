@@ -1,0 +1,10 @@
+#player-status-list{
+    float:left;
+    width: 50%;
+}
+
+#ready-button{
+    float:right;
+    width: 50%;
+}
+
