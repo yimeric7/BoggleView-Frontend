@@ -80,22 +80,22 @@ export default function SinglePlayer() {
     return (
         <>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
-                <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                    <GameTimer onEnd={handleGameEnd} timerStart={gameStart}/>
-                    <button onClick={handleGameStart}>Start Game!</button>
-                    <button onClick={() => nav('/')}>Return home</button>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button style={{ pointerEvents: 'none' }}><GameTimer onEnd={handleGameEnd} timerStart={gameStart} /></button></div>
+                    <div style={{ position: 'fixed', right: '50%', top: '0%', transform: 'translate(50%, 50%)', fontSize: '20px' }}> <button onClick={handleGameStart}>Start Game!</button></div>
+                    <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}> <button onClick={() => nav('/')}> Return home </button></div>
                 </div>
-
+                <br /><br />
                 <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
-                    <div>
+                <div>
 
-                    </div>
+                </div>
                 {gameStart ? (
-                    <div style={{display: 'flex', justifyContent: 'center'}}>
-                        <div style={{margin: 'auto'}}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div style={{ margin: 'auto' }}>
                             <Board boardSize={boardSize} board={randomBoard} />
                         </div>
-                        <div style={{position: 'absolute', top: '18%', right: '18%'}}>
+                        <div style={{ position: 'absolute', right: '18%', borderRadius: '35px' }}>
                             <table id="score-table">
                                 <tr>
                                     <th>Word </th>
@@ -122,9 +122,9 @@ export default function SinglePlayer() {
 
                 <span id="word-submit">
                     <input type="text"
-                           onChange={handleChange}
-                           onKeyDown={handleKeyDown}
-                           value={input}/>
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                        value={input} />
                 </span>
 
 
