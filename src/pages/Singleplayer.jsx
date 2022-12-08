@@ -49,15 +49,16 @@ export default function SinglePlayer() {
     }
 
     const handleKeyDown = event => {
-        if (event.key === 'Enter') {
+        if (event.key === 'Enter' || event.key === 'Return') {
             // Check if word is correct, if correct, then add word to scoretable
-            if (possibleWords.has(input) && !usedWords.has(input)) {
+            let read = input.toLowerCase();
+            if (possibleWords.has(read) && !usedWords.has(read)) {
                 const newWordFound = {
-                    word: input,
-                    score: possibleWords.get(input)
+                    word: read,
+                    score: possibleWords.get(read)
                 }
                 setFoundWords([...foundWords, newWordFound])
-                setUsedWords(new Set([...usedWords, input]));
+                setUsedWords(new Set([...usedWords, read]));
                 setInput('');
             } else {
                 // throw alert and say not word

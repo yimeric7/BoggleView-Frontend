@@ -14,7 +14,7 @@ export default function MainSelectMode() {
                     onClick={() => nav('/single-player')}>
                 Single Player</button>
             <button className="select-gamemode-buttons" id="select-multiplayer"
-                    onClick={() => console.log("multiplayer")}>
+                     onClick={() => nav('/multiplayer-select-mode')}>
                 Multiplayer</button>
         </>
     )
