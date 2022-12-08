@@ -10,7 +10,6 @@ import MultiplayerWait from './pages/MultiplayerWait.jsx';
 
 export default function App() {
     return (
-
         <Routes>
             <Route path="/" element={
                 <div id="home-container">
@@ -29,9 +28,7 @@ export default function App() {
                     <MultiplayerSelectMode />
                 </div>} />
             <Route path="/single-player" element={
-                <div id="boggle-container">
                     <SinglePlayer />
-                </div>
             } />
             <Route path="/multiplayer-wait" element={
                 <div id="multiplayer-wait-container">

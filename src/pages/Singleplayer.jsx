@@ -7,6 +7,7 @@ import {
 } from '../backend/utils.js';
 import '../styles/board.css';
 import { useNavigate } from "react-router";
+import GameTimer from '../components/GameTimer.jsx';
 
 let dictionary = [];
 fetch(
@@ -27,6 +28,8 @@ export default function SinglePlayer() {
     const [foundWords, setFoundWords] = useState([]);
     const [currentScore, setCurrentScore] = useState(0);
     const [usedWords, setUsedWords] = useState(new Set());
+    const [gameStart, setGameStart] = useState(false);
+    const [timer, setTimer] = useState(60);
     const nav = useNavigate();
 
     useEffect(() => {
@@ -57,33 +60,65 @@ export default function SinglePlayer() {
                 setUsedWords(new Set([...usedWords, input]));
                 setInput('');
             } else {
-                // throw error and say not word
+                // throw alert and say not word
                 console.log("not a word");
             }
 
         }
     }
 
-    const handleClick = () => {
+    const handleGameStart = () => {
+        setGameStart(true);
+    }
 
+    const handleGameEnd = () => {
+        // handle event
+        console.log('game ended')
     }
 
     return (
         <>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
-                <button onClick={handleClick}>Start Game!</button>
-                <button onClick={() => nav('/')}>Return home</button>
-                <h1>Boggle</h1>
-                <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
-                <Board boardSize={boardSize} board={randomBoard} />
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <GameTimer onEnd={handleGameEnd} timerStart={gameStart}/>
+                    <button onClick={handleGameStart}>Start Game!</button>
+                    <button onClick={() => nav('/')}>Return home</button>
+                </div>
 
-                {/*// Enter in here to start playing*/}
-                {/*// on change, update word,*/}
-                {/*// if valid word, then you get points (or pop up that says "some prhases (randomized))*/}
-                {/*// if invalid, alert that says invalid word, please try again*/}
-                {/*// score box that shows points*/}
-                {/*// also show how many words you've gotten out of possible*/}
-                {/*// put word score on right (css)*/}
+                <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
+                    <div>
+
+                    </div>
+                {gameStart ? (
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <div style={{margin: 'auto'}}>
+                            <Board boardSize={boardSize} board={randomBoard} />
+                        </div>
+                        <div style={{position: 'absolute', top: '18%', right: '18%'}}>
+                            <table id="score-table">
+                                <tr>
+                                    <th>Word </th>
+                                    <th>Score</th>
+                                </tr>
+                                {foundWords.map(obj => {
+                                    return (
+                                        <tr>
+                                            <td>{obj.word}</td>
+                                            <td>{obj.score}</td>
+                                        </tr>
+                                    )
+                                })}
+                                <tr>
+                                </tr>
+                                <tr id="footer">
+                                    <td>Total </td>
+                                    <td>{currentScore}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                ) : (<></>)}
+
                 <span id="word-submit">
                     <input type="text"
                            onChange={handleChange}
@@ -91,26 +126,15 @@ export default function SinglePlayer() {
                            value={input}/>
                 </span>
 
-                <table id="score-table">
-                    <tr>
-                        <th>Word </th>
-                        <th>Score</th>
-                    </tr>
-                    {foundWords.map(obj => {
-                        return (
-                            <tr>
-                                <td>{obj.word}</td>
-                                <td>{obj.score}</td>
-                            </tr>
-                        )
-                    })}
-                    <tr>
-                    </tr>
-                    <tr id="footer">
-                        <td>Total </td>
-                        <td>{currentScore}</td>
-                    </tr>
-                </table>
+
+                {/*// Enter in here to start playing*/}
+
+                {/*// if valid word, then you get points (or pop up that says "some prhases (randomized))*/}
+                {/*// if invalid, alert that says invalid word, please try again*/}
+                {/*// score box that shows points*/}
+                {/*// also show how many words you've gotten out of possible*/}
+                {/*// put word score on right (css)*/}
+
             </div>
         </>
     );
