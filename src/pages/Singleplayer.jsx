@@ -29,7 +29,8 @@ export default function SinglePlayer() {
     const [currentScore, setCurrentScore] = useState(0);
     const [usedWords, setUsedWords] = useState(new Set());
     const [gameStart, setGameStart] = useState(false);
-    const [timer, setTimer] = useState(60);
+    const [gameStartedOnce, setGameStartedOnce] = useState(0);
+    const [gameEnd, setGameEnd] = useState(false);
     const nav = useNavigate();
 
     useEffect(() => {
@@ -69,63 +70,80 @@ export default function SinglePlayer() {
     }
 
     const handleGameStart = () => {
-        setGameStart(true);
+        if (gameStartedOnce === 0) {
+            setGameStart(true);
+            setGameStartedOnce((state) => state + 1)
+        } else return;
     }
 
     const handleGameEnd = () => {
         // handle event
-        console.log('game ended')
+        console.log('game ended');
+        setGameStart(false);
+        setGameEnd(true);
     }
 
     return (
         <>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button style={{ pointerEvents: 'none' }}><GameTimer onEnd={handleGameEnd} timerStart={gameStart} /></button></div>
-                    <div style={{ position: 'fixed', right: '50%', top: '0%', transform: 'translate(50%, 50%)', fontSize: '20px' }}> <button onClick={handleGameStart}>Start Game!</button></div>
-                    <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}> <button onClick={() => nav('/')}> Return home </button></div>
+                    <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button style={{ pointerEvents: 'none' }}>
+                        <GameTimer onEnd={handleGameEnd} timerStart={gameStart} /></button></div>
+                    <div style={{ position: 'fixed', right: '50%', top: '0%', transform: 'translate(50%, 50%)', fontSize: '20px' }}>
+                        <button onClick={handleGameStart}>Start Game!</button></div>
+                    <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button onClick={() => nav('/')}> Return home </button></div>
                 </div>
                 <br /><br />
                 <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
-                <div>
 
-                </div>
+                {/*{fix CSS for Score board}*/}
                 {gameStart ? (
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <div style={{ margin: 'auto' }}>
-                            <Board boardSize={boardSize} board={randomBoard} />
+                    <div>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <div style={{ margin: 'auto' }}>
+                                <Board boardSize={boardSize} board={randomBoard} />
+                            </div>
+                            <div style={{ position: 'absolute', right: '18%', borderRadius: '35px' }}>
+                                <table id="score-table">
+                                    <tr>
+                                        <th>Word </th>
+                                        <th>Score</th>
+                                    </tr>
+                                    {foundWords.map(obj => {
+                                        return (
+                                            <tr>
+                                                <td>{obj.word}</td>
+                                                <td>{obj.score}</td>
+                                            </tr>
+                                        )
+                                    })}
+                                    <tr>
+                                    </tr>
+                                    <tr id="footer">
+                                        <td>Total </td>
+                                        <td>{currentScore}</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <div style={{ position: 'absolute', right: '18%', borderRadius: '35px' }}>
-                            <table id="score-table">
-                                <tr>
-                                    <th>Word </th>
-                                    <th>Score</th>
-                                </tr>
-                                {foundWords.map(obj => {
-                                    return (
-                                        <tr>
-                                            <td>{obj.word}</td>
-                                            <td>{obj.score}</td>
-                                        </tr>
-                                    )
-                                })}
-                                <tr>
-                                </tr>
-                                <tr id="footer">
-                                    <td>Total </td>
-                                    <td>{currentScore}</td>
-                                </tr>
-                            </table>
-                        </div>
+
+                        <span id="word-submit">
+                        <input type="text"
+                               onChange={handleChange}
+                               onKeyDown={handleKeyDown}
+                               value={input} />
+                        </span>
                     </div>
                 ) : (<></>)}
 
-                <span id="word-submit">
-                    <input type="text"
-                        onChange={handleChange}
-                        onKeyDown={handleKeyDown}
-                        value={input} />
-                </span>
+                {/*{get these on seperate lines}*/}
+                {gameEnd ? (
+                    <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
+                        fontSize: '75px', lineHeight: '75px', marginTop: '10%', flexDirection: 'row',
+                        flexWrap: 'wrap'}}>
+                        <strong>Game Ended! </strong> Final Score: {currentScore}
+                    </div>
+                ) : (<></>)}
 
 
                 {/*// Enter in here to start playing*/}
@@ -135,7 +153,6 @@ export default function SinglePlayer() {
                 {/*// score box that shows points*/}
                 {/*// also show how many words you've gotten out of possible*/}
                 {/*// put word score on right (css)*/}
-
             </div>
         </>
     );
