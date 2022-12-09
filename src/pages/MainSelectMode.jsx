@@ -6,16 +6,24 @@ export default function MainSelectMode() {
 
     return (
         // display Boggle Logo
-        <>
-            <div>
-                <h1>Select Game mode</h1>
+        <div id="main-select-mode-parent">
+            <div style={{ position: 'absolute', top: '33%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%' }}>
+                <div style={{ fontSize: '60px', lineHeight: '70px' }}>
+                    <strong>Welcome to Boggle!</strong>
+                </div>
+                <br />
+                <div style={{ fontSize: '40px', lineHeight: '50px' }}>
+                    Select a gamemode
+                </div>
             </div>
-            <button className="select-gamemode-buttons" id="select-singleplayer"
-                    onClick={() => nav('/single-player')}>
-                Single Player</button>
-            <button className="select-gamemode-buttons" id="select-multiplayer"
-                     onClick={() => nav('/multiplayer-select-mode')}>
-                Multiplayer</button>
-        </>
+            <div style={{ position: 'absolute', top: '45%', left: '37%', transform: 'translate(-50%, -50%)' }}>
+                <br /><br/><br/>
+                <button style={{ fontSize: '30px' }} onClick={() => nav('/single-player')}>Single Player</button>
+            </div>
+            <div style={{ position: 'absolute', top: '45%', left: '62%', transform: 'translate(-50%, -50%)' }}>
+                <br /><br/><br/>
+                <button style={{ fontSize: '30px' }} onClick={() => nav('/multiplayer-select-mode')}>Multiplayer</button>
+            </div>
+        </div>
     )
 }
