@@ -1,0 +1,5 @@
+#join-select-port-text:hover
+.style-button:hover
+{
+    pointer-events: none;
+}
