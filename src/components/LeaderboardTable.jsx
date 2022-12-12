@@ -49,7 +49,7 @@ export default function LeaderboardTable( props ) {
 
     useEffect(() => {
         // setData(testData)
-        fetch("https://5e3f-167-248-126-71.ngrok.io/api/GetTop10LeaderBoard")
+        fetch("http://localhost:5272/api/GetTop10LeaderBoard")
             .then((response) => response.json())
             .then((data) => {
                 console.log('data' + data)
@@ -59,18 +59,17 @@ export default function LeaderboardTable( props ) {
     }, []);
 
     return (
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Score</th>
+        <table id="table">
+            <tr style={{width: '100%', textAlign: 'center', fontWeight: 'bold'}}>
+                <td colSpan="2" style={{fontSize: '40px'}}>Leaderboard</td>
             </tr>
-            </thead>
-            <tbody>
+            <tr style={{fontWeight: 'bold', fontSize: '20px'}}>
+                <td>Name</td>
+                <td>Score</td>
+            </tr>
             {data.map((player) => (
                 <LeaderboardRow userName={player.userName} matchScore={player.matchScore} />
             ))}
-            </tbody>
         </table>
     );
 }

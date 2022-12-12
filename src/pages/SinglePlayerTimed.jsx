@@ -8,10 +8,11 @@ import {
 import '../styles/board.css';
 import { useNavigate } from "react-router";
 import GameTimer from '../components/GameTimer.jsx';
-import axios from "axios";
 import { useAuth } from "../backend/AuthContext.jsx";
 import { TutorialWhilePlaying } from "../components/TutorialWhilePlaying.jsx";
 import LeaderboardTable from '../components/LeaderboardTable.jsx'
+import '../styles/board.css'
+import '../styles/Leaderboard.css';
 
 let dictionary = [];
 fetch(
@@ -36,8 +37,10 @@ export default function SinglePlayerTimed() {
     const [gameStart, setGameStart] = useState(false);
     const [gameStartedOnce, setGameStartedOnce] = useState(0);
     const [gameEnd, setGameEnd] = useState(false);
-    const [leaderboard, setLeaderboard] = useState('');
     const [phrase, setPhrase] = useState('');
+    const [endPhrase, setEndPhrase] = useState('');
+    const [nameEntered, setNameEntered] = useState(false);
+    const [leaderboardClosed, setLeaderboardClosed] = useState(false);
     const nav = useNavigate();
 
     useEffect(() => {
@@ -89,23 +92,35 @@ export default function SinglePlayerTimed() {
         setGameEnd(true);
     }
 
-    const handleEndKeyDown = () => {
+    const handleEndKeyDown = event => {
         if (event.key === 'Enter' || event.key === 'Return') {
-            console.log(input+currentScore);
-            let read = input.toLowerCase();
-
-            axios.post("https://5e3f-167-248-126-71.ngrok.io/api/AddNewPlayer", {
-                userName: {read},
-                matchScore: {currentScore}
-            }).then(response => {
-                console.log(response.data);
+            setInput('');
+            setEndPhrase("Thanks for playing!");
+            setNameEntered(true);
+            fetch("http://localhost:5272/api/AddNewPlayer", {
+                method: 'POST',
+                body: JSON.stringify({
+                    userName: `${input}`,
+                    matchScore: `${currentScore}`
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                })
                 .catch(error => {
                     console.error(error);
                 });
         }
     }
-    {/*// Enter in here to start playing*/}
+
+    const handleClose = () => {
+        setLeaderboardClosed(true);
+    }
+
     return (
         <>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
@@ -169,27 +184,52 @@ export default function SinglePlayerTimed() {
 
                 {gameEnd ? (
                     <div>
-                        <LeaderboardTable />
                         <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
                             fontSize: '75px', lineHeight: '75px', flexDirection: 'row', marginTop: '3%', flexWrap: 'wrap'}}>
-                            <strong>Game Ended! </strong>
+                            <strong>Game Ended!</strong>
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
                             fontSize: '60px', lineHeight: '60px', flexDirection: 'row', marginTop: '1%', flexWrap: 'wrap'}}>
                             Final Score: {currentScore}
                         </div>
-                        <div style={{fontSize: '35px', lineHeight: '35px', marginTop: '5%', fontWeight: 'bold'}}>
-                            Enter Name
-                        </div>
-                        <span id="word-submit">
-                        <input type="text"
-                        onChange={handleChange}
-                        onKeyDown={handleEndKeyDown}
-                        value={input} />
-                        </span>
+                        {!leaderboardClosed ? (<div style={{display: 'flex', justifyContent: 'center', margin: 'auto', marginRight: '27%', marginTop: '2%',
+                            position: 'relative'}}>
+                            <div style={{position: 'absolute', top: '1%', right: '13%', zIndex: '1'}}>
+                                <button className="close-button" onClick={handleClose}>
+                                    <span className="close-button__line close-button__line--top"><strong>X</strong></span>
+                                </button>
+                            </div>
+                            <div style={{position: 'absolute', right: '51%', zIndex: '-1'}}>
+                                <LeaderboardTable />
+                            </div>
+                        </div>) : (<></>)}
                     </div>
                 ) : (<></>)}
 
+                {leaderboardClosed ? (
+                    <div>
+                        {!nameEntered ? (
+                        <div>
+                            <div style={{fontSize: '35px', lineHeight: '35px', marginTop: '5%', fontWeight: 'bold'}}>
+                                Enter Name
+                            </div>
+                            <span id="word-submit">
+                            <input type="text"
+                                   onChange={handleChange}
+                                   onKeyDown={handleEndKeyDown}
+                                   value={input} />
+                            </span>
+                        </div>
+                        ) : (<div style={{display: 'flex', justifyContent: 'center'}}>
+                            <div style={{fontSize: '50px', lineHeight: '65px', marginTop: '5%'}}><strong>{endPhrase}</strong>
+                                <br/>
+                                <div style={{fontSize: '20px', lineHeight: '20px', width: '75%', marginLeft: '13%'}}>
+                                    If you scored within the top 10, you will be added to the leaderboard!
+                                </div>
+                            </div>
+                        </div>)}
+                    </div>
+                ) : (<></>)}
             </div>
         </>
     );
