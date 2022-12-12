@@ -5,7 +5,17 @@
     margin: 0 auto;
 }
 
-#board {
+#board3{
+    border-radius: 35px;
+    border: 8px solid #dcdcdc;
+    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.69);
+    margin: 3px;
+    padding: 8px;
+    width: 320px;
+    height: 320px;
+}
+
+#board4 {
     border-radius: 35px;
     border: 8px solid #dcdcdc;
     box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.69);
@@ -30,25 +40,36 @@ input[type="text"] {
     caret-color: rgba(0, 0, 0, 0.5);
 }
 
-#score-table {
-    align-self: flex-start;
-    height: 200px;
-    border: 5px solid #dcdcdc;
-    width: 200px;
+#show-table {
     border-radius: 35px;
-    border-collapse: collapse;
-    text-align: left;
+    border: 8px solid #dcdcdc;
+    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.69);
+    margin: 5px;
+    padding: 8px;
+    width: 420px;
+    height: 420px;
 }
 
-#score-table td, #score-table th {
-    border-radius: 10px solid #dcdcdc;
-    background-color: white;
-    padding: 5px;
-    color: black;
+#score-table {
+    border-radius: 35px;
+    border: 8px solid #181818;
+    box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.69);
+    margin: 5px;
+    padding: 8px;
+    width: 200px;
+    height: 100px;
+}
+
+#score-table td {
+    font-size: 15px;
+}
+
+#score-table th {
+    font-size: 20px;
 }
 
 #score-table tr#footer td {
-    background-color: #ACCEEC;
+    font-size: 15px;
 }
 
 .row {

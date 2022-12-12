@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import GameTimer from '../components/GameTimer.jsx';
 import axios from "axios";
 import {useAuth} from "../backend/AuthContext.jsx";
+import {TutorialWhilePlaying} from "../components/TutorialWhilePlaying.jsx";
 
 let dictionary = [];
 fetch(
@@ -19,8 +20,8 @@ fetch(
     .then((data) => {
         for (let key in data) {
             dictionary.push(key);
-        }
-    });
+    }
+});
 
 export default function SinglePlayerTimed() {
     const { givenBoardSize } = useAuth();
@@ -35,6 +36,7 @@ export default function SinglePlayerTimed() {
     const [gameStartedOnce, setGameStartedOnce] = useState(0);
     const [gameEnd, setGameEnd] = useState(false);
     const [leaderboard, setLeaderboard] = useState('');
+    const [phrase, setPhrase] = useState('');
     const nav = useNavigate();
 
     useEffect(() => {
@@ -65,11 +67,12 @@ export default function SinglePlayerTimed() {
                 setFoundWords([...foundWords, newWordFound])
                 setUsedWords(new Set([...usedWords, read]));
                 setInput('');
+                setPhrase("Valid Word!");
+            } else if (possibleWords.has(read) && usedWords.has(read)) {
+                setPhrase('Already Used!');
             } else {
-                // throw alert and say not word
-                console.log("not a word");
+                setPhrase('NOT A WORD');
             }
-
         }
     }
 
@@ -81,46 +84,52 @@ export default function SinglePlayerTimed() {
     }
 
     const handleGameEnd = () => {
-        // handle event
-        console.log('game ended');
         setGameStart(false);
         setGameEnd(true);
         try {
-            axios.get('https://5e3f-167-248-126-71.ngrok.io/api/GetTop10LeaderBoard')
+            fetch('https://5e3f-167-248-126-71.ngrok.io/api/GetTop10LeaderBoard')
                 .then((response) => {
-                    console.log(response)
+                    return response.json()
+                })
+                .then((data) => {
+                    // Work with JSON data here
+                    console.log(data)
+                })
+                .catch((err) => {
+                    // Do something for an error here
                 })
         } catch {
             console.log('Get leaderboard failed!')
         }
     }
 
-    // const handleEndKeyDown = () => {
-    //     if (event.key === 'Enter' || event.key === 'Return') {
-    //         axios.post('https://my-server.com/login', {
-    //             username: 'user123',
-    //             password: 'password456'
-    //         }, (response) => {
-    //             // do something with the response here
-    //         })
-    //
-    //         // Check if word is correct, if correct, then add word to scoretable
-    //         let read = input.toLowerCase();
-    //         if (possibleWords.has(read) && !usedWords.has(read)) {
-    //             const newWordFound = {
-    //                 word: read,
-    //                 score: possibleWords.get(read)
-    //             }
-    //             setFoundWords([...foundWords, newWordFound])
-    //             setUsedWords(new Set([...usedWords, read]));
-    //             setInput('');
-    //         } else {
-    //             // throw alert and say not word
-    //             console.log("not a word");
-    //         }
-    //
-    //     }
-    // }
+    const handleEndKeyDown = () => {
+        if (event.key === 'Enter' || event.key === 'Return') {
+            console.log(input+currentScore);
+            axios.post('https://my-server.com/login', {
+                username: 'user123',
+                password: 'password456'
+            }, (response) => {
+                // do something with the response here
+            })
+
+            // Check if word is correct, if correct, then add word to scoretable
+            let read = input.toLowerCase();
+            if (possibleWords.has(read) && !usedWords.has(read)) {
+                const newWordFound = {
+                    word: read,
+                    score: possibleWords.get(read)
+                }
+                setFoundWords([...foundWords, newWordFound])
+                setUsedWords(new Set([...usedWords, read]));
+                setInput('');
+            } else {
+                // throw alert and say not word
+                console.log("not a word");
+            }
+
+        }
+    }
 
     return (
         <>
@@ -128,15 +137,24 @@ export default function SinglePlayerTimed() {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button style={{ pointerEvents: 'none' }}>
                         <GameTimer onEnd={handleGameEnd} timerStart={gameStart} /></button></div>
-                    <div style={{ position: 'fixed', right: '40%', top: '4%', transform: 'translateY(50%)', fontSize: '40px'}}>
+                    <div style={{ position: 'fixed', right: '41%', top: '4%', transform: 'translateY(50%)', fontSize: '40px'}}>
                         <strong>Boggle Timed</strong></div>
                     <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button onClick={() => nav('/wait')}>Return</button></div>
                 </div>
                 <br /><br />
 
+                {!gameStartedOnce ? (
+                    <>
+                        <div style={{ position: 'fixed', right: '50%', top: '25%', transform: 'translate(50%, 50%)', fontSize: '85px' }}>
+                            <button onClick={handleGameStart}>Start Game!</button></div>
+                        <TutorialWhilePlaying />
+                    </>
+                ) : (<></>)}
+
                 {/*{fix CSS for Score board}*/}
                 {gameStart ? (
                     <div>
+                        <TutorialWhilePlaying />
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <div style={{ margin: 'auto' }}>
                                 <Board boardSize={boardSize} board={randomBoard} />
@@ -168,28 +186,25 @@ export default function SinglePlayerTimed() {
                         <span id="word-submit">
                         <input type="text"
                                onChange={handleChange}
-                               onKeyDown={handleKeyDown}
+                               onKeyDown={handleEndKeyDown}
                                value={input} />
                         </span>
+                        <div style={{fontSize: '30px'}}><strong>{phrase}</strong></div>
                     </div>
-                ) : (<>
-                    <div style={{ position: 'fixed', right: '50%', top: '25%', transform: 'translate(50%, 50%)', fontSize: '85px' }}>
-                        <button onClick={handleGameStart}>Start Game!</button></div>
-                </>)}
+                ) : (<></>)}
 
                 {/*{get these on seperate lines}*/}
                 {gameEnd ? (
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
-                            fontSize: '75px', lineHeight: '75px', marginTop: '10%', flexDirection: 'row',
-                            flexWrap: 'wrap'}}>
-                            <strong>Game Ended! </strong> Final Score: {currentScore}
+                            fontSize: '75px', lineHeight: '75px', flexDirection: 'row', marginTop: '3%', flexWrap: 'wrap'}}>
+                            <strong>Game Ended! </strong>
                         </div>
-                        <div>
-                            {console.log(leaderboard)}
+                        <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
+                            fontSize: '60px', lineHeight: '60px', flexDirection: 'row', marginTop: '1%', flexWrap: 'wrap'}}>
+                            Final Score: {currentScore}
                         </div>
-
-                        <div>
+                        <div style={{fontSize: '35px', lineHeight: '35px', marginTop: '5%', fontWeight: 'bold'}}>
                             Enter Name
                         </div>
                         <span id="word-submit">
@@ -200,15 +215,8 @@ export default function SinglePlayerTimed() {
                         </span>
                     </div>
                 ) : (<></>)}
-
-
                 {/*// Enter in here to start playing*/}
 
-                {/*// if valid word, then you get points (or pop up that says "some prhases (randomized))*/}
-                {/*// if invalid, alert that says invalid word, please try again*/}
-                {/*// score box that shows points*/}
-                {/*// also show how many words you've gotten out of possible*/}
-                {/*// put word score on right (css)*/}
             </div>
         </>
     );
