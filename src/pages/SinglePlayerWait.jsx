@@ -1,9 +1,9 @@
 import '../styles/MultiplayerSelectMode.css'
-import React, { useState } from 'react'
-import { useNavigate, Navigate } from 'react-router';
+import React from 'react'
+import { useNavigate } from 'react-router';
 import LogoutButton from "../components/LogoutButton.jsx";
-import SelectBoardScreen from "./SelectBoardScreen";
 import { useAuth } from "../backend/AuthContext.jsx";
+import { Tutorial } from "../components/Tutorial.jsx";
 
 
 export default function SinglePlayerWait() {
@@ -30,8 +30,9 @@ export default function SinglePlayerWait() {
 
     return (
         <div >
+            <Tutorial />
             <LogoutButton />
-            <div style={{ position: 'absolute', top: '33%', left: '52%', transform: 'translate(-50%, -50%)', width: '100%'}}>
+            <div style={{ position: 'absolute', top: '33%', left: '52%', transform: 'translate(-50%, -50%)'}}>
                 <div style={{ fontSize: '60px', lineHeight: '70px' }}>
                     <strong>Select Mode</strong>
                 </div>

@@ -7,8 +7,8 @@ import {
 } from '../backend/utils.js';
 import '../styles/board.css';
 import { useNavigate } from "react-router";
-import {useAuth} from "../backend/AuthContext.jsx";
-import GameTimer from "../components/GameTimer.jsx";
+import { useAuth } from "../backend/AuthContext.jsx";
+import { TutorialWhilePlaying } from "../components/TutorialWhilePlaying";
 
 let dictionary = [];
 fetch(
@@ -18,8 +18,8 @@ fetch(
     .then((data) => {
         for (let key in data) {
             dictionary.push(key);
-        }
-    });
+    }
+});
 
 export default function SinglePlayerUntimed( ) {
     const { givenBoardSize } = useAuth();
@@ -33,7 +33,7 @@ export default function SinglePlayerUntimed( ) {
     const [gameStart, setGameStart] = useState(false);
     const [gameStartedOnce, setGameStartedOnce] = useState(0);
     const [gameEnd, setGameEnd] = useState(false);
-    const [leaderboard, setLeaderboard] = useState('');
+    const [phrase, setPhrase] = useState('');
     const [wordsMissed, setWordsMissed] = useState([]);
     const nav = useNavigate();
 
@@ -65,11 +65,12 @@ export default function SinglePlayerUntimed( ) {
                 setFoundWords([...foundWords, newWordFound])
                 setUsedWords(new Set([...usedWords, read]));
                 setInput('');
+                setPhrase('Valid Word!')
+            } else if (possibleWords.has(read) && usedWords.has(read)) {
+                setPhrase('Already Used!');
             } else {
-                // throw alert and say not word
-                console.log("not a word");
+                setPhrase('NOT A WORD');
             }
-
         }
     }
 
@@ -101,56 +102,32 @@ export default function SinglePlayerUntimed( ) {
         setWordsMissed(wordsMissedArr);
     }, [gameEnd])
 
-    // const handleEndKeyDown = () => {
-    //     if (event.key === 'Enter' || event.key === 'Return') {
-    //         axios.post('https://my-server.com/login', {
-    //             username: 'user123',
-    //             password: 'password456'
-    //         }, (response) => {
-    //             // do something with the response here
-    //         })
-    //
-    //         // Check if word is correct, if correct, then add word to scoretable
-    //         let read = input.toLowerCase();
-    //         if (possibleWords.has(read) && !usedWords.has(read)) {
-    //             const newWordFound = {
-    //                 word: read,
-    //                 score: possibleWords.get(read)
-    //             }
-    //             setFoundWords([...foundWords, newWordFound])
-    //             setUsedWords(new Set([...usedWords, read]));
-    //             setInput('');
-    //         } else {
-    //             // throw alert and say not word
-    //             console.log("not a word");
-    //         }
-    //
-    //     }
-    // }
-
     return (
         <>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}>
-                        <button onClick={handleGameEnd}>End Game!</button>
-                    </div>
                     <div style={{ position: 'fixed', right: '40%', top: '4%', transform: 'translateY(50%)', fontSize: '40px'}}>
                         <strong>Boggle Untimed</strong></div>
                     <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button onClick={() => nav('/wait')}>Return</button></div>
                 </div>
                 <br></br>
                 {!gameStartedOnce ? (
-                    <div style={{ position: 'fixed', right: '50%', top: '25%', transform: 'translate(50%, 50%)', fontSize: '85px' }}>
-                        <button onClick={handleGameStart}>Start Game!</button></div>
+                    <>
+                        <div style={{ position: 'fixed', right: '50%', top: '25%', transform: 'translate(50%, 50%)', fontSize: '85px' }}>
+                            <button onClick={handleGameStart}>Start Game!</button></div>
+                        <TutorialWhilePlaying />
+                    </>
                 ) : (<></>)}
 
-                {/*{fix CSS for Score board}*/}
                 {gameStart ? (
                     <div>
+                        <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}>
+                            <button onClick={handleGameEnd}>End Game!</button>
+                        </div>
+                        <TutorialWhilePlaying />
                         <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <div style={{ margin: 'auto' }}>
+                            <div style={{ margin: 'auto', top: '10%' }}>
                                 <Board boardSize={boardSize} board={randomBoard} />
                             </div>
                             <div style={{ position: 'absolute', right: '18%', borderRadius: '35px' }}>
@@ -183,18 +160,22 @@ export default function SinglePlayerUntimed( ) {
                                onKeyDown={handleKeyDown}
                                value={input} />
                         </span>
+                        <div style={{fontSize: '30px'}}><strong>{phrase}</strong></div>
                     </div>
                 ) : (<></>)}
 
                 {gameEnd ? (
                     <div>
+                        <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}>
+                            <button onClick={handleGameEnd}>End Game!</button>
+                        </div>
                         <div>
                             These are the words you missed!
                         </div>
                         <div>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <div>
-                                    <table id="score-table">
+                                    <table id="show-table">
                                         <tr>
                                             <th>Word </th>
                                             <th>Score</th>
