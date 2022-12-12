@@ -87,48 +87,22 @@ export default function SinglePlayerTimed() {
     const handleGameEnd = () => {
         setGameStart(false);
         setGameEnd(true);
-        // try {
-        //     fetch('https://5e3f-167-248-126-71.ngrok.io/api/GetTop10LeaderBoard')
-        //         .then((response) => {
-        //             return response.json()
-        //         })
-        //         .then((data) => {
-        //             // Work with JSON data here
-        //             console.log(data)
-        //         })
-        //         .catch((err) => {
-        //             // Do something for an error here
-        //         })
-        // } catch {
-        //     console.log('Get leaderboard failed!')
-        // }
     }
 
     const handleEndKeyDown = () => {
         if (event.key === 'Enter' || event.key === 'Return') {
             console.log(input+currentScore);
-            axios.post('https://my-server.com/login', {
-                username: 'user123',
-                password: 'password456'
-            }, (response) => {
-                // do something with the response here
-            })
-
-            // Check if word is correct, if correct, then add word to scoretable
             let read = input.toLowerCase();
-            if (possibleWords.has(read) && !usedWords.has(read)) {
-                const newWordFound = {
-                    word: read,
-                    score: possibleWords.get(read)
-                }
-                setFoundWords([...foundWords, newWordFound])
-                setUsedWords(new Set([...usedWords, read]));
-                setInput('');
-            } else {
-                // throw alert and say not word
-                console.log("not a word");
-            }
 
+            axios.post("https://5e3f-167-248-126-71.ngrok.io/api/AddNewPlayer", {
+                userName: {read},
+                matchScore: {currentScore}
+            }).then(response => {
+                console.log(response.data);
+            })
+                .catch(error => {
+                    console.error(error);
+                });
         }
     }
     {/*// Enter in here to start playing*/}
