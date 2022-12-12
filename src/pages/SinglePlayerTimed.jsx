@@ -130,15 +130,15 @@ export default function SinglePlayerTimed() {
 
         }
     }
-
+    {/*// Enter in here to start playing*/}
     return (
         <>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button style={{ pointerEvents: 'none' }}>
                         <GameTimer onEnd={handleGameEnd} timerStart={gameStart} /></button></div>
-                    <div style={{ position: 'fixed', right: '41%', top: '4%', transform: 'translateY(50%)', fontSize: '40px'}}>
-                        <strong>Boggle Timed</strong></div>
+                    <div style={{ position: 'fixed', right: '38%', top: '0%', fontSize: '40px'}}>
+                        <button style={{ pointerEvents: 'none' }}><strong>Boggle Timed</strong></button></div>
                     <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button onClick={() => nav('/wait')}>Return</button></div>
                 </div>
                 <br /><br />
@@ -151,15 +151,14 @@ export default function SinglePlayerTimed() {
                     </>
                 ) : (<></>)}
 
-                {/*{fix CSS for Score board}*/}
                 {gameStart ? (
                     <div>
                         <TutorialWhilePlaying />
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <div style={{ margin: 'auto' }}>
+                            <div style={{ margin: 'auto', marginTop: '6%' }}>
                                 <Board boardSize={boardSize} board={randomBoard} />
                             </div>
-                            <div style={{ position: 'absolute', right: '18%', borderRadius: '35px' }}>
+                            <div style={{ marginTop : '6%', position: 'absolute', right: '18%', borderRadius: '35px' }}>
                                 <table id="score-table">
                                     <tr>
                                         <th>Word </th>
@@ -186,14 +185,13 @@ export default function SinglePlayerTimed() {
                         <span id="word-submit">
                         <input type="text"
                                onChange={handleChange}
-                               onKeyDown={handleEndKeyDown}
+                               onKeyDown={handleKeyDown}
                                value={input} />
                         </span>
                         <div style={{fontSize: '30px'}}><strong>{phrase}</strong></div>
                     </div>
                 ) : (<></>)}
 
-                {/*{get these on seperate lines}*/}
                 {gameEnd ? (
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
@@ -210,12 +208,11 @@ export default function SinglePlayerTimed() {
                         <span id="word-submit">
                         <input type="text"
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}
+                        onKeyDown={handleEndKeyDown}
                         value={input} />
                         </span>
                     </div>
                 ) : (<></>)}
-                {/*// Enter in here to start playing*/}
 
             </div>
         </>

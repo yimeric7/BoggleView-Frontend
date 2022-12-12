@@ -106,8 +106,8 @@ export default function SinglePlayerUntimed( ) {
         <>
             <div style={{ margin: 'auto', textAlign: 'center' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div style={{ position: 'fixed', right: '40%', top: '4%', transform: 'translateY(50%)', fontSize: '40px'}}>
-                        <strong>Boggle Untimed</strong></div>
+                    <div style={{ position: 'fixed', right: '36%', top: '0%', fontSize: '40px'}}>
+                        <button style={{ pointerEvents: 'none' }}><strong>Boggle Untimed</strong></button></div>
                     <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button onClick={() => nav('/wait')}>Return</button></div>
                 </div>
                 <br></br>
@@ -125,7 +125,9 @@ export default function SinglePlayerUntimed( ) {
                             <button onClick={handleGameEnd}>End Game!</button>
                         </div>
                         <TutorialWhilePlaying />
-                        <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
+                        <div style={{marginTop: '6%'}}>
+                            <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
+                        </div>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <div style={{ margin: 'auto', top: '10%' }}>
                                 <Board boardSize={boardSize} board={randomBoard} />
@@ -169,7 +171,7 @@ export default function SinglePlayerUntimed( ) {
                         <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}>
                             <button onClick={handleGameEnd}>End Game!</button>
                         </div>
-                        <div>
+                        <div style={{marginTop: '5%'}}>
                             These are the words you missed!
                         </div>
                         <div>

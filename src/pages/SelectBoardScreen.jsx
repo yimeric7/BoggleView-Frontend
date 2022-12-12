@@ -29,10 +29,10 @@ export default function SelectBoardScreen() {
     useEffect(() => {
         if (gameMode === 'timed') {
             setCurrentMode("Boggle Timed");
-            setAlignPercent("41%");
+            setAlignPercent("38%");
         } else {
             setCurrentMode("Boggle Untimed");
-            setAlignPercent('40%');
+            setAlignPercent('36%');
         }
     }, [gameMode])
 
@@ -40,8 +40,8 @@ export default function SelectBoardScreen() {
         <div>
             <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button onClick={() => nav('/wait')}>
                 Return</button></div>
-            <div style={{ position: 'fixed', right: `${alignPercent}`, top: '4%', transform: 'translateY(50%)', fontSize: '40px'}}>
-                <strong>{currentMode}</strong></div>
+            <div style={{ position: 'fixed', right: `${alignPercent}`, top: '0%', fontSize: '40px'}}>
+                <button style={{ pointerEvents: 'none' }}><strong>{currentMode}</strong></button></div>
             <div style={{ position: 'absolute', top: '33%', left: '51%', transform: 'translate(-50%, -50%)'}}>
                 <div style={{ fontSize: '60px', lineHeight: '70px' }}>
                     <strong>Select board size!</strong>

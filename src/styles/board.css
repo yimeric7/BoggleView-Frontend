@@ -46,8 +46,11 @@ input[type="text"] {
     box-shadow: 0px 3px 2px 1px rgba(0, 0, 0, 0.69);
     margin: 5px;
     padding: 8px;
-    width: 420px;
-    height: 420px;
+    width: 300px;
+    height: 100px;
+}
+#show-table th {
+    font-size: 20px;
 }
 
 #score-table {
