@@ -45,7 +45,7 @@ export default function LoginPage() {
                             <div style={{ width: '100%', fontSize: '20px', lineHeight: '30px', position: 'absolute', transform: 'translateY(50%)', top: '45%' }}>
                                 <Form onSubmit={handleSubmit}>
                                     <Form.Group id="email">
-                                        <button className="style-button" style={{ pointerEvents: 'none', width: '7.5%', borderBottomLeftRadius: '0px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' }}>Email</button>
+                                        <button className="style-button" style={{ pointerEvents: 'none', width: '8%', borderBottomLeftRadius: '0px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' }}>Email</button>
                                         <Form.Control
                                             type="email"
                                             ref={emailRef} required
@@ -53,7 +53,7 @@ export default function LoginPage() {
                                         />
                                     </Form.Group>
                                     <Form.Group id="password">
-                                        <button className="style-button" style={{ pointerEvents: 'none', width: '7.5%', borderTopLeftRadius: '0px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' }}>Password</button>
+                                        <button className="style-button" style={{ pointerEvents: 'none', width: '8%', borderTopLeftRadius: '0px', borderTopRightRadius: '0px', borderBottomRightRadius: '0px' }}>Password</button>
                                         <Form.Control
                                             type="password"
                                             ref={passwordRef} required
@@ -71,7 +71,7 @@ export default function LoginPage() {
                         </Card.Body>
                     </Card>
                 </div>
-                <div className="w-100 text-center m-2" style={{ position: 'absolute', transform: 'translate(-50%, -50%)', top: '65%', left: '50%' }}>
+                <div className="w-100 text-center m-2" style={{ marginTop: '40%'}}>
                     Need an account? <Link to="/signup">Sign up here</Link>
                 </div>
             </Container>
