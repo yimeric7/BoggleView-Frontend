@@ -105,6 +105,7 @@ export default function SinglePlayerTimed() {
 
     const handleEndKeyDown = () => {
         if (event.key === 'Enter' || event.key === 'Return') {
+            console.log(input+currentScore);
             axios.post('https://my-server.com/login', {
                 username: 'user123',
                 password: 'password456'
@@ -196,15 +197,14 @@ export default function SinglePlayerTimed() {
                 {gameEnd ? (
                     <div>
                         <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
-                            fontSize: '75px', lineHeight: '75px', marginTop: '10%', flexDirection: 'row',
-                            flexWrap: 'wrap'}}>
-                            <strong>Game Ended! </strong> Final Score: {currentScore}
+                            fontSize: '75px', lineHeight: '75px', flexDirection: 'row', marginTop: '3%', flexWrap: 'wrap'}}>
+                            <strong>Game Ended! </strong>
                         </div>
-                        <div>
-                            {console.log(leaderboard)}
+                        <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
+                            fontSize: '60px', lineHeight: '60px', flexDirection: 'row', marginTop: '1%', flexWrap: 'wrap'}}>
+                            Final Score: {currentScore}
                         </div>
-
-                        <div>
+                        <div style={{fontSize: '35px', lineHeight: '35px', marginTop: '5%', fontWeight: 'bold'}}>
                             Enter Name
                         </div>
                         <span id="word-submit">
