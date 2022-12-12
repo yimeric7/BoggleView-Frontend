@@ -1,47 +1,36 @@
 import React from 'react';
-import MultiplayerHost from './pages/MultiplayerHost.jsx';
-import MultiplayerJoin from './pages/MultiplayerJoin.jsx';
-import MultiplayerSelectMode from './pages/MultiplayerSelectMode.jsx';
 import './styles/board.css';
 import { Route, Routes } from "react-router";
-import SinglePlayer from "./pages/Singleplayer.jsx"
-import MainSelectMode from "./pages/MainSelectMode";
-import MultiplayerWait from './pages/MultiplayerWait.jsx';
+import SinglePlayerTimed from "./pages/SinglePlayerTimed.jsx"
+import LoginPage from "./pages/Login.jsx";
+import { AuthProvider } from "./backend/AuthContext.jsx";
+import SignupPage from "./pages/Signup.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import SinglePlayerWait from "./pages/SinglePlayerWait.jsx";
+import SinglePlayerUntimed from "./pages/SinglePlayerUntimed.jsx";
+import SelectBoardScreen from "./pages/SelectBoardScreen.jsx";
 
 export default function App() {
     return (
-        <Routes>
-            <Route path="/" element={
-                <div id="home-container">
-                    <MainSelectMode />
-                </div>} />
-            <Route path="/multiplayer-host" element={
-                <div id="multiplayer-host-container">
-                    <MultiplayerHost />
-                </div>} />
-            <Route path="/multiplayer-join" element={
-                <div id="multiplayer-join-container">
-                    <MultiplayerJoin />
-                </div>} />
-            <Route path="/multiplayer-select-mode" element={
-                <div id="multiplayer-select-mode-container">
-                    <MultiplayerSelectMode />
-                </div>} />
-            <Route path="/single-player" element={
-                    <SinglePlayer />
-            } />
-            <Route path="/multiplayer-wait" element={
-                <div id="multiplayer-wait-container">
-                    <MultiplayerWait />
-                </div>
-            } />
-        </Routes>
-
+        <AuthProvider>
+            <Routes>
+                <Route path="/" element={<HomePage />}/>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path='/wait' element={<PrivateRoute children={
+                    <SinglePlayerWait />}
+                />}> </Route>
+                <Route path='/select-board' element={<PrivateRoute children={
+                    <SelectBoardScreen/>}
+                />}> </Route>
+                <Route path='/timed' element={<PrivateRoute children={
+                    <SinglePlayerTimed />}
+                />}> </Route>
+                <Route path='/untimed' element={<PrivateRoute children={
+                    <SinglePlayerUntimed />}
+                />}> </Route>
+            </Routes>
+        </AuthProvider>
     );
 }
-
-/*
-    TODO:   Add routes to buttons on home and multiplayer select mode
-            Verify input on all screens
-            Add multiplayer waiting screen
-*/

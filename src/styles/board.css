@@ -32,14 +32,16 @@ input[type="text"] {
 
 #score-table {
     align-self: flex-start;
+    height: 200px;
     border: 5px solid #dcdcdc;
-    border-radius: 15px;
+    width: 200px;
+    border-radius: 35px;
     border-collapse: collapse;
     text-align: left;
 }
 
 #score-table td, #score-table th {
-    border: 5px solid #dcdcdc;
+    border-radius: 10px solid #dcdcdc;
     background-color: white;
     padding: 5px;
     color: black;

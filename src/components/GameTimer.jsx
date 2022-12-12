@@ -4,7 +4,6 @@ export default function GameTimer({ onEnd, timerStart}) {
     // Change this to minute & second format
     const [remainingTime, setRemainingTime] = useState(5)
     const timerRef = useRef(null);
-
     useEffect(() => {
         if (timerStart) {
             setRemainingTime(() => 5)

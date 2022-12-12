@@ -8,6 +8,8 @@ import {
 import '../styles/board.css';
 import { useNavigate } from "react-router";
 import GameTimer from '../components/GameTimer.jsx';
+import axios from "axios";
+import {useAuth} from "../backend/AuthContext.jsx";
 
 let dictionary = [];
 fetch(
@@ -20,8 +22,9 @@ fetch(
         }
     });
 
-export default function SinglePlayer() {
-    const boardSize = 4;
+export default function SinglePlayerTimed() {
+    const { givenBoardSize } = useAuth();
+    const boardSize = givenBoardSize;
     const [input, setInput] = useState()
     const [randomBoard, setRandomBoard] = useState([[]]);
     const [possibleWords, setPossibleWords] = useState([]);
@@ -31,6 +34,7 @@ export default function SinglePlayer() {
     const [gameStart, setGameStart] = useState(false);
     const [gameStartedOnce, setGameStartedOnce] = useState(0);
     const [gameEnd, setGameEnd] = useState(false);
+    const [leaderboard, setLeaderboard] = useState('');
     const nav = useNavigate();
 
     useEffect(() => {
@@ -81,7 +85,42 @@ export default function SinglePlayer() {
         console.log('game ended');
         setGameStart(false);
         setGameEnd(true);
+        try {
+            axios.get('https://5e3f-167-248-126-71.ngrok.io/api/GetTop10LeaderBoard')
+                .then((response) => {
+                    console.log(response)
+                })
+        } catch {
+            console.log('Get leaderboard failed!')
+        }
     }
+
+    // const handleEndKeyDown = () => {
+    //     if (event.key === 'Enter' || event.key === 'Return') {
+    //         axios.post('https://my-server.com/login', {
+    //             username: 'user123',
+    //             password: 'password456'
+    //         }, (response) => {
+    //             // do something with the response here
+    //         })
+    //
+    //         // Check if word is correct, if correct, then add word to scoretable
+    //         let read = input.toLowerCase();
+    //         if (possibleWords.has(read) && !usedWords.has(read)) {
+    //             const newWordFound = {
+    //                 word: read,
+    //                 score: possibleWords.get(read)
+    //             }
+    //             setFoundWords([...foundWords, newWordFound])
+    //             setUsedWords(new Set([...usedWords, read]));
+    //             setInput('');
+    //         } else {
+    //             // throw alert and say not word
+    //             console.log("not a word");
+    //         }
+    //
+    //     }
+    // }
 
     return (
         <>
@@ -89,12 +128,11 @@ export default function SinglePlayer() {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <div style={{ position: 'fixed', left: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button style={{ pointerEvents: 'none' }}>
                         <GameTimer onEnd={handleGameEnd} timerStart={gameStart} /></button></div>
-                    <div style={{ position: 'fixed', right: '50%', top: '0%', transform: 'translate(50%, 50%)', fontSize: '20px' }}>
-                        <button onClick={handleGameStart}>Start Game!</button></div>
-                    <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button onClick={() => nav('/')}> Return home </button></div>
+                    <div style={{ position: 'fixed', right: '40%', top: '4%', transform: 'translateY(50%)', fontSize: '40px'}}>
+                        <strong>Boggle Timed</strong></div>
+                    <div style={{ position: 'fixed', right: '5%', top: '0%', transform: 'translateY(50%)', fontSize: '20px' }}><button onClick={() => nav('/wait')}>Return</button></div>
                 </div>
                 <br /><br />
-                <h2>{foundWords.length} / {possibleWords.size} Words Found</h2>
 
                 {/*{fix CSS for Score board}*/}
                 {gameStart ? (
@@ -134,14 +172,32 @@ export default function SinglePlayer() {
                                value={input} />
                         </span>
                     </div>
-                ) : (<></>)}
+                ) : (<>
+                    <div style={{ position: 'fixed', right: '50%', top: '25%', transform: 'translate(50%, 50%)', fontSize: '85px' }}>
+                        <button onClick={handleGameStart}>Start Game!</button></div>
+                </>)}
 
                 {/*{get these on seperate lines}*/}
                 {gameEnd ? (
-                    <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
-                        fontSize: '75px', lineHeight: '75px', marginTop: '10%', flexDirection: 'row',
-                        flexWrap: 'wrap'}}>
-                        <strong>Game Ended! </strong> Final Score: {currentScore}
+                    <div>
+                        <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
+                            fontSize: '75px', lineHeight: '75px', marginTop: '10%', flexDirection: 'row',
+                            flexWrap: 'wrap'}}>
+                            <strong>Game Ended! </strong> Final Score: {currentScore}
+                        </div>
+                        <div>
+                            {console.log(leaderboard)}
+                        </div>
+
+                        <div>
+                            Enter Name
+                        </div>
+                        <span id="word-submit">
+                        <input type="text"
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                        value={input} />
+                        </span>
                     </div>
                 ) : (<></>)}
 
