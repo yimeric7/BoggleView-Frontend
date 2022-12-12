@@ -2,11 +2,11 @@ import React, {useEffect, useRef, useState} from "react";
 
 export default function GameTimer({ onEnd, timerStart}) {
     // Change this to minute & second format
-    const [remainingTime, setRemainingTime] = useState(60)
+    const [remainingTime, setRemainingTime] = useState(2)
     const timerRef = useRef(null);
     useEffect(() => {
         if (timerStart) {
-            setRemainingTime(() => 60)
+            setRemainingTime(() => 2)
             timerRef.current = setInterval(() => {
                 setRemainingTime((state) => state - 1);
             }, 1000); // call function every 1 second

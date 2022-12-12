@@ -28,7 +28,8 @@ export const Tutorial = () => {
                             direction (horizontally, vertically, or diagonally).</li>
                         <li>Enter your word in the text box given, and if it is a valid
                             word, you will be awarded points depending on the word length.</li>
-                        <li>When the timer ends, your score will be recorded.</li>
+                        <li>Words have to be at least 3 letters long.
+                            When the timer ends, your score will be recorded.</li>
                         <li>The untimed version is just to practice finding more words.
                             All the words missed will be shown at the end.</li>
                         <li>If you want to continue playing, return to the main menu

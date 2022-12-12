@@ -9,8 +9,9 @@ import '../styles/board.css';
 import { useNavigate } from "react-router";
 import GameTimer from '../components/GameTimer.jsx';
 import axios from "axios";
-import {useAuth} from "../backend/AuthContext.jsx";
-import {TutorialWhilePlaying} from "../components/TutorialWhilePlaying.jsx";
+import { useAuth } from "../backend/AuthContext.jsx";
+import { TutorialWhilePlaying } from "../components/TutorialWhilePlaying.jsx";
+import LeaderboardTable from '../components/LeaderboardTable.jsx'
 
 let dictionary = [];
 fetch(
@@ -86,21 +87,21 @@ export default function SinglePlayerTimed() {
     const handleGameEnd = () => {
         setGameStart(false);
         setGameEnd(true);
-        try {
-            fetch('https://5e3f-167-248-126-71.ngrok.io/api/GetTop10LeaderBoard')
-                .then((response) => {
-                    return response.json()
-                })
-                .then((data) => {
-                    // Work with JSON data here
-                    console.log(data)
-                })
-                .catch((err) => {
-                    // Do something for an error here
-                })
-        } catch {
-            console.log('Get leaderboard failed!')
-        }
+        // try {
+        //     fetch('https://5e3f-167-248-126-71.ngrok.io/api/GetTop10LeaderBoard')
+        //         .then((response) => {
+        //             return response.json()
+        //         })
+        //         .then((data) => {
+        //             // Work with JSON data here
+        //             console.log(data)
+        //         })
+        //         .catch((err) => {
+        //             // Do something for an error here
+        //         })
+        // } catch {
+        //     console.log('Get leaderboard failed!')
+        // }
     }
 
     const handleEndKeyDown = () => {
@@ -194,6 +195,7 @@ export default function SinglePlayerTimed() {
 
                 {gameEnd ? (
                     <div>
+                        <LeaderboardTable />
                         <div style={{ display: 'flex', justifyContent: 'center', margin: 'auto',
                             fontSize: '75px', lineHeight: '75px', flexDirection: 'row', marginTop: '3%', flexWrap: 'wrap'}}>
                             <strong>Game Ended! </strong>
